@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edukasi Hewan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/alamliar.jpg'); /* Ganti dengan lokasi file background.jpg */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparansi untuk kontras teks */
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff5733;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .did-you-know {
+            text-align: center;
+            font-size: 2rem;
+            color: #ff5733;
+            margin: 20px 0;
+        }
+        .info-card {
+            background-color: #e8f5e9;
+            border: 2px solid #81c784;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .info-card img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+        .info-card p {
+            font-size: 1.2rem;
+            color: #333;
+            text-align: justify;
+            margin-top: 15px;
+        }
+        .back-btn {
+            background-color: #2196f3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .back-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Did You Know?</div>
+        
+        <div class="info-card text-center">
+            <img src="images/badak.jpg" alt="Badak">
+            <p>
+                Badak merupakan salah satu mamalia besar di Indonesia yang terancam punah. 
+                Di Indonesia terdapat dua spesies badak, yaitu badak sumatera (<em>Dicerorhinus sumatrensis</em>) 
+                dan badak jawa (<em>Rhinoceros sondaicus</em>). Badak sumatera, juga dikenal sebagai badak berambut atau badak Asia bercula dua, 
+                merupakan spesies langka dari famili <strong>Rhinocerotidae</strong> dan termasuk salah satu dari lima spesies badak yang masih ada. 
+                Badak sumatera merupakan badak terkecil di dunia.
+            </p>
+        </div>
+        
+        <div class="text-center">
+            <button class="back-btn" onclick="goBack()">Kembali</button>
+
+<script>
+    function goBack() {
+        // Navigasi kembali ke halaman game-over
+        window.location.href = "../game-over.html";
+    }
+</script>
+
+</body>
+</html>

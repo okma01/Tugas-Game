@@ -1,0 +1,22 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+img {
+    border: 2px solid #ddd;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+img:hover {
+    transform: scale(1.05);
+    border-color: #007bff;
+}
+
+.hidden {
+    display: none;
+}
+
+#feedback {
+    color: #333;
+}

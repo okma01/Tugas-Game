@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/forest_background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+            font-family: 'Comic Sans MS', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            text-align: center;
+            padding-top: 10%;
+        }
+        .btn-custom {
+            background-color: #ffcc00;
+            border: 2px solid #aa8800;
+            color: #000;
+            font-size: 1.2rem;
+            margin: 10px;
+            width: 250px;
+        }
+        .btn-custom:hover {
+            background-color: #ffe066;
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Backsound -->
+    <audio id="backgroundMusic">
+        <source src="audio/game-over.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <h1>Game Selesai</h1>
+        <h1>Anda: <span id="final-score"></span></h1>
+        <button class="btn btn-custom" onclick="goHome()">Kembali ke Halaman Utama</button><br>
+        <button class="btn btn-custom" onclick="restartGame()">Main Lagi</button><br>
+        <select id="seeMoreDropdown" class="form-select mt-3" onchange="navigateToPage()">
+            <option value="" disabled selected>Informasi Tambahan</option>
+            <option value="informasi/unta.html">Tentang Unta</option>
+            <option value="informasi/ayam.html">Tentang Ayam</option>
+            <option value="informasi/burunghantu.html">Tentang Burung Hantu</option> 
+            <option value="informasi/singa.html">Tentang Singa</option>
+            <option value="informasi/macantutul.html">Tentang Macan Tutul</option>
+            <option value="informasi/gajah.html">Tentang Gajah </option>
+            <option value="informasi/kanguru.html">Tentang Kanguru</option>
+            <option value="informasi/jerapah.html">Tentang Jerapah</option>
+            <option value="informasi/kudanil.html">Tentang Kudanil</option>
+            <option value="informasi/badak.html">Tentang Badak</option>
+        </select>
+    </div>
+
+    <script>
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        
+        // Cek apakah pengguna kembali dari halaman informasi
+        if (!sessionStorage.getItem("fromInfoPage")) {
+            backgroundMusic.play().catch(err => console.error("Audio error:", err));
+        } else {
+            sessionStorage.removeItem("fromInfoPage"); // Hapus status
+        }
+
+        // Menangkap skor dari parameter URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const score = urlParams.get('score') || 0; // Default 0 jika tidak ada skor
+        document.getElementById("final-score").innerText = score;
+
+        // Fungsi untuk kembali ke halaman utama
+        function goHome() {
+            backgroundMusic.pause();
+            window.location.href = "index.html";
+        }
+
+        // Fungsi untuk mengulang permainan
+        function restartGame() {
+            backgroundMusic.pause();
+            window.location.href = "game.html";
+        }
+
+        // Navigasi ke halaman tambahan
+        function navigateToPage() {
+            const dropdown = document.getElementById("seeMoreDropdown");
+            const selectedValue = dropdown.value;
+            if (selectedValue) {
+                backgroundMusic.pause(); // Hentikan audio sebelum pindah halaman
+                sessionStorage.setItem("fromInfoPage", "true"); // Tandai bahwa berpindah ke halaman informasi
+                window.location.href = selectedValue;
+            }
+        }
+    </script>
+</body>
+</html>

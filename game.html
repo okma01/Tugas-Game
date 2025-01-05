@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gameplay</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/forest_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            font-family: 'Comic Sans MS', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        .game-header div {
+            text-align: center;
+            margin: 0 10px;
+        }
+        .game-header span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #ffcc00;
+            border: 2px solid #aa8800;
+            color: #000;
+            font-size: 1.0rem;
+            padding: 10px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 700;
+        }
+        .back-button:hover {
+            background-color: #ffe066;
+            transform: scale(1.05);
+            box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        .sound-toggle {
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            margin-left: 15px;
+        }
+        .question-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .question-container img {
+            height: 150px;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .answers-container button {
+            background-color: #ffcc00;
+            border: 2px solid #aa8800;
+            color: #000;
+            width: 100%;
+            margin: 5px 0;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .answers-container button:hover {
+            background-color: #ffe066;
+            transform: scale(1.05);
+            box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Backsound -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="audio/backsound.mp3" type="audio/mpeg">
+        <source src="audio/backsound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Tombol Kembali -->
+    <button class="back-button" onclick="goBack()">⬅ Kembali</button>
+
+    <div class="container py-3">
+        <!-- Header Game -->
+        <div class="game-header">
+            <div>
+                <span>Soal</span>
+                <span id="level">1</span>
+            </div>
+            <div>
+                <span>Waktu</span>
+                <span id="time">30</span>
+            </div>
+            <div>
+                <span>Score</span>
+                <span id="score">0</span>
+            </div>
+            <div>
+                <span>Darah</span>
+                <span id="lives">❤️❤️❤️</span>
+            </div>
+            <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+        </div>
+
+        <!-- Kontainer Soal -->
+        <div class="question-container">
+            <h3 id="questionText">Apa nama Hewan ini?</h3>
+            <img id="animalImage" src="images/camel.jpg" alt="Animal">
+            <div class="answers-container">
+                <button onclick="checkAnswer('Unta')">Unta</button>
+                <button onclick="checkAnswer('Ayam')">Ayam</button>
+                <button onclick="checkAnswer('Naga')">Naga</button>
+                <button onclick="checkAnswer('Zebra')">Zebra</button>
+            </div>
+        </div>
+
+    <script>
+        let level = 1; 
+        let score = 0;
+        let time = 30; 
+        let lives = 3;
+        const timerElement = document.getElementById("time");
+        const scoreElement = document.getElementById("score");
+        const livesElement = document.getElementById("lives");
+        const levelElement = document.getElementById("level");
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        const soundToggle = document.getElementById("soundToggle");
+
+        const questions = [
+            {
+                image: "images/camel.jpg",
+                correct: "Unta",
+                options: ["Kuda", "Ayam", "Unta", "Zebra"]
+            },
+            {
+                image: "images/rooster.jpg",
+                correct: "Ayam",
+                options: ["Ayam", "Bebek", "Angsa", "Burung"]
+            },
+            {
+                image: "images/owl.png",  
+                correct: "Burung Hantu",
+                options: ["Elang", "Burung Hantu", "Merpati", "Kekelawar"]
+            },
+            {
+                image: "images/singa.png",
+                correct: "Singa",
+                options: ["Hariamau", "Kucing", "Gajah", "Singa"]
+            },
+            {
+                image: "images/leopard.png",  
+                correct: "Macan Tutul",
+                options: ["Kucing", "Singa", "Macan Tutul", "Harimau"]
+            },
+            {
+                image: "images/gajah.png",  
+                correct: "Gajah",
+                options: ["Gajah", "Badak", "Jerapa", "Kudanil"]
+            },
+            {
+                image: "images/kangaroo.png",  
+                correct: "Kanguru",
+                options: ["Tupai", "Kanguru", "Kelinci", "Tikus"]
+            },
+            {
+                image: "images/jerapah.png",  
+                correct: "Jerapah",
+                options: ["Zebra", "Kuda", "Jerapah", "Singa"]
+            },
+            {
+                image: "images/kudanil.png",  
+                correct: "Kudanil",
+                options: ["Gajah", "Kudanil", "Badak", "Zebra"]
+            },
+            {
+                image: "images/badak.png",  
+                correct: "Badak",
+                options: ["Badak", "Kudanil", "Zebra", "Jerapah"]
+            },
+            // Tambahkan soal lainnya...
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById("animalImage").src = question.image;
+            levelElement.textContent = currentQuestionIndex + 1;
+
+            const answerButtons = document.querySelectorAll(".answers-container button");
+            answerButtons.forEach((button, index) => {
+                button.textContent = question.options[index];
+                button.onclick = () => checkAnswer(question.options[index]);
+            });
+        }
+
+        function checkAnswer(answer) {
+            const question = questions[currentQuestionIndex];
+            if (answer === question.correct) {
+                score += 10;
+                scoreElement.textContent = score;
+                nextQuestion();
+            } else {
+                lives--;
+                if (lives === 0) {
+                    gameOver();
+                } else {
+                    livesElement.textContent = "❤️".repeat(lives);
+                }
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                gameOver();
+            }
+        }
+
+        function startTimer() {
+            const timerInterval = setInterval(() => {
+                time--;
+                timerElement.textContent = time;
+                if (time === 0) {
+                    clearInterval(timerInterval);
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        function gameOver() {
+            window.location.href = "game-over.html?score=" + score;
+        }
+
+        function toggleSound() {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                soundToggle.textContent = "🔊";
+            } else {
+                backgroundMusic.pause();
+                soundToggle.textContent = "🔇";
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onload = () => {
+            loadQuestion();
+            startTimer();
+        };
+    </script>
+</body>
+</html>

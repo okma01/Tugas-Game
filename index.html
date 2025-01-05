@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mencocokkan Nama Hewan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/forest_background.jpg'); /* Ganti dengan gambar latar hutan */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+        .main-container {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding-top: 10%;
+        }
+        .main-title {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .btn-custom {
+            background-color: #ffcc00;
+            border: 2px solid #aa8800;
+            color: #000;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            width: 250px;
+        }
+        .btn-custom:hover {
+            background-color: #ffe066;
+            border-color: #cc9900;
+        }
+        .animal-images {
+            margin-top: 30px;
+        }
+        .animal-images img {
+            height: 80px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Backsound -->
+    <audio id="backgroundMusic" loop>
+        <source src="audio/backsound.mp3" type="audio/mpeg">
+        <source src="audio/backsound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="main-container">
+        <h1 class="main-title">Mencocokkan Nama Hewan</h1>
+        <p class="subtitle">KELOMPOK 6</p>
+        <button class="btn btn-custom" onclick="startGame()">Mulai Game</button><br>
+        <button class="btn btn-custom" onclick="readRules()">Baca Peraturan Sebelum Main</button><br>
+        <button class="btn btn-custom" onclick="goToGameOver()">Menuju Ke Halaman Akhir</button><br>
+
+        <div class="animal-images">
+            <img src="images/owl.png" alt="Burung Hantu"> <!-- Ganti dengan ikon hewan -->
+            <img src="images/leopard.png" alt="Macan Tutul">
+            <img src="images/toucan.png" alt="Burung Toucan">
+            <img src="images/kangaroo.png" alt="Kanguru">
+        </div>
+    </div>
+
+    <script>
+        const backgroundMusic = document.getElementById("backgroundMusic");
+
+        function startGame() {
+            // Mulai backsound
+            backgroundMusic.play().catch(err => {
+                console.log("Error playing audio:", err);
+            });
+
+            // Pindah ke halaman gameplay
+            window.location.href = "game.html";
+        }
+
+        function readRules() {
+            // Pindah ke halaman peraturan
+            window.location.href = "rules.html";
+        }
+
+        function goToGameOver() {
+            // Menghentikan backsound sebelum pindah ke halaman game-over
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+
+            // Pindah ke halaman game-over
+            window.location.href = "game-over.html";
+        }
+    </script>
+</body>
+</html>
